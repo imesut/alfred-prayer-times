@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>imesut.prayer_times</string>
+	<key>category</key>
+	<string>Internet</string>
+	<key>connections</key>
+	<dict>
+		<key>4CC8404A-E793-45F3-A87B-E7FFDE4A0D1D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A96626E9-81F4-430B-850A-3EADFCB0A350</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>94E9BB7A-085B-4BDB-B88D-13425E8BFF42</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A96626E9-81F4-430B-850A-3EADFCB0A350</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Mesut Yılmaz</string>
+	<key>description</key>
+	<string>Shows prayer times retrieved from</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Prayer Times</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>namaz</string>
+				<key>subtext</key>
+				<string>Get Prayer Times</string>
+				<key>text</key>
+				<string>Namaz - prayer</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>94E9BB7A-085B-4BDB-B88D-13425E8BFF42</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>salat</string>
+				<key>subtext</key>
+				<string>Get Prayer Times</string>
+				<key>text</key>
+				<string>Salat - prayer</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>4CC8404A-E793-45F3-A87B-E7FFDE4A0D1D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>prayer</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Retrieving prayer times</string>
+				<key>script</key>
+				<string>/usr/local/bin/python3 namaz.py 9541 en</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Get Prayer Times</string>
+				<key>title</key>
+				<string>prayer</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>A96626E9-81F4-430B-850A-3EADFCB0A350</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>Alfred-Prayer-Times
+An Alfred (Spotlight app for MacOS) workflow for displaying daily prayer times, data retrieved from ezanvakti.herokuapp. Ezanvakti retrieves data from Diyanet
+
+This workflow caches data for one hour. It is possible to change this duration. ezanvakti.herokuapp has an API call limit, caching time should be 45 seconds at least.
+
+This workflow is tested with Alfred 3.
+
+Installation
+
+Open file with .alfredworkflow extension.
+
+Install requirements file inside the workflow package. After adding workflow, right click to it then "Open in Finder". You can enter the directory and run
+pip3 install -r requirements.txt
+
+Customization
+Customize script filter: The placeId and localization code should be changed.
+
+Changind Place Id: Double click to the prayerscript filter box. The command will be like /usr/local/bin/python3 namaz.py 9541 en
+
+Change 9541 value for place Id. This value can be obtained from Prayer Times web site. When country / city and place details selected, the placeId will appear on the url like
+https://namazvakitleri.diyanet.gov.tr/en-US/cityId/...
+
+Change local value en. This workflow currently contains tr and en codes. You can also add a new code by editing localizations.py file.
+
+Also you can change the Python3 path according to your system.
+
+You can use multiple keywords like namaz, prayer, salat and more. To add new keywords use workflow screen.
+
+Credits
+
+- ezanvakti.herokuapp.com
+
+- Icons made by Freepik from www.flaticon.com</string>
+	<key>uidata</key>
+	<dict>
+		<key>4CC8404A-E793-45F3-A87B-E7FFDE4A0D1D</key>
+		<dict>
+			<key>xpos</key>
+			<integer>240</integer>
+			<key>ypos</key>
+			<integer>190</integer>
+		</dict>
+		<key>94E9BB7A-085B-4BDB-B88D-13425E8BFF42</key>
+		<dict>
+			<key>xpos</key>
+			<integer>240</integer>
+			<key>ypos</key>
+			<integer>50</integer>
+		</dict>
+		<key>A96626E9-81F4-430B-850A-3EADFCB0A350</key>
+		<dict>
+			<key>xpos</key>
+			<integer>240</integer>
+			<key>ypos</key>
+			<integer>350</integer>
+		</dict>
+	</dict>
+	<key>version</key>
+	<string>1.0</string>
+	<key>webaddress</key>
+	<string>https://github.com/imesut</string>
+</dict>
+</plist>
