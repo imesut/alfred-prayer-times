@@ -1,5 +1,4 @@
-import requests, sys, pickle, json, localizations
-from cachetools import cached, LRUCache, TTLCache
+import requests, sys, json, localizations, os, glob
 from datetime import datetime as dt
 
 #9541 for Istanbul, retrieves from script filter command line
@@ -17,14 +16,6 @@ displayed_remaining_time_once = False
 times = [0,0,0,0,0,0]
 items = {'items': []}
 
-try:
-    with open('prayer.pickle', 'rb') as f:
-        cache = pickle.load(f)
-except FileNotFoundError:
-    #Cache expires in 1 hour as seconds
-    cache = TTLCache(maxsize=1024, ttl=3600)
-
-@cached(cache)
 def getTimes():
     global times
     vakit = requests.get("https://ezanvakti.herokuapp.com/vakitler?ilce=" + placeId)
@@ -43,7 +34,7 @@ def getTimes():
     times.insert(0, title)
     return times
 
-def main():
+def calculate_times():
     global times, displayed_remaining_time_once
     now = dt.now().strftime(fmt)
     times = getTimes()
@@ -58,9 +49,19 @@ def main():
             else:
                 subtitle = ""
         items["items"].append({"title": time, "subtitle": subtitle})
-    print(json.dumps(items))
+    return json.dumps(items)
 
-main()
+cache_file_name = dt.now().strftime("%Y-%m-%d-%H") + ".json"
 
-with open('prayer.pickle', 'wb') as f:
-    pickle.dump(cache, f)
+if os.path.isfile(cache_file_name):
+    # there is a valid and cached request
+    with open(cache_file_name, "r") as f:
+        print(f.readline())
+else:
+    # Delete previous files
+    for previous_file in glob.glob("*.json"):
+        os.remove(previous_file)
+    times = calculate_times()
+    with open(cache_file_name, "a") as f:
+        f.write(times)
+    print(times)
